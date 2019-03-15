@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Shopping List</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div id="page-wrap">
+      <header>
+        <h1 id="head">myShoppingList</h1>
+		  <div class="topnav">
+			  <a id="itemBtn" href="#about"><i></i> Item</a>
+			  <a id="shopBtn"  href="#home"><i></i> Shop</a>
+			  
+			  
+			  <div class="search-container">
+				  <input type="text" placeholder="Search.." name="search">
+			  </div>
+			</div>
+      </header>
+	 <!--main content-->
+      <div class="main">
+		  <div class="shop-list">
+			  
+			  <div class="shop-list-sidenav">
+				  <legend class="shop-list-sidenav-head">Shopping List<span class="shop-list-sidenav-head-add" onclick="showinputlist()">+</span></legend>
+				  <div class="shop-list-input"><input type="text" id="list-input" name="list-input" placeholder="Input New List.." maxlength= "15" onkeyup="addfav(event)"><span class="tooltiptext">Please input here... &#9888;</span></div>
+				  <ul>
+				  </ul>
+			  </div>
+			  <div class="shop-list-content">
+					  <table class="shop-list-table" id="shop-list-table">
+						<thead>
+							<span class="shop-list-update-Btn" id="shop-list-update-Btn" onclick="showItemList()" title="Update list name" >&#9998;</span>
+							<h3 class="shop-list-table-title">List Title</h3><span class="shop-list-addBtn" id="shop-list-addBtn" onclick="showItemList()" title="Add item on list">+</span>
+						    <th>Product</th>
+						    <th>Price/Unit</th> 
+							<th>Quantity</th>
+							<th>Sub-Total</th>
+						  	<th></th>
+						</thead>
+						<tbody id="shop-list-tblBody">
+							
+						</tbody>
+					  </table>
+					  <h3 class="shop-list-table-note">No Item Available</h3>
+			  </div>
+			  
+		  </div>
+		  <div class="items">
+			  <div class="item-list-content">
+				  <table class="item-list-table" id="item-list-table">
+					  <thead>
+						  <th>Product</th>
+						  <th>Price</th>
+						  <th>Unit</th>
+						  <th><span class="item-list-addBtn" id="item-list-addBtn" onclick="showform();">+</span></th>
+					  </thead>
+					  <tbody id="item-list-tblBody">
+					  </tbody>
+				  </table>
+				  <h3 class="item-list-table-note"> No Item Available</h3>
+			  </div>
+		  </div>
+	</div>
+      <footer>
+        Copyright © myshoppinglist.com
+      </footer>
+    </div>
+	<!--modal pages-->
+	<!--Add new Item modal-->
+	<div id="add-item-modal" class="add-item-modal" >
+      <div class="add-item-modal-content">
+        <legend><span class="add-item-form-label">Add New Item</span> <span class="add-item-close" id="add-item-clsBtn">&times;</span></legend>
+        <div class="add-item-alert">
+          <span class="add-item-closebtn" onclick="this.parentElement.style.display='none';">&#10005;</span> 
+          <span class="danger">&#9888; </span>
+          <span class="message" id="message"></span>
+        </div>
+        <div class="add-item-container">
+          <form action="#">
+            <div class="row">
+              <div class="col-25">
+                <label for="iname">Name</label>
+              </div>
+              <div class="col-75">
+                <input type="text" id="iname" name="itemname" placeholder="Item name.." maxlength= "15">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="iprice">Price</label>
+              </div>
+              <div class="col-75">
+                <input type="number" id="iprice" name="itemprice" placeholder="Item price.." min="1" max="999999">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-25">
+                <label for="unit">Unit</label>
+              </div>
+              <div class="col-75">
+                <select id="unit" name="unit" placeholder="Unit">
+                  <option value="Kilogram">Kilogram</option>
+                  <option value="Liter">Liter</option>
+                  <option value="Gallon">Gallon</option>
+                  <option value="500grams">500grams</option>
+                  <option value="250grams">250grams</option>
+                  <option value="Piece">Piece</option>
+                  <option value="Pack">Pack</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <input id="add-item-saveItem" type="button" name="button" value="Submit">
+             <!-- <input id="addList" type="button" name="listBtn" value="&#36;">-->
+              
+            </div>
+          </form>
+        </div>
+        <div class="add-item-delete-container">
+          <div class="row">
+            <label>Are you sure you want to delete <span class="delete-message"></span> from Item list?</label>
+          </div>
+          <div class="row">
+			<input id="deleteItem" type="button" name="deleteItem" value="Delete">
+            <input id="cancel-deleteItem" type="button" name="cancel-deleteItem" value="Cancel">
+           
+          </div>
+        </div>
+      </div>
+    </div>
+	 <!--Shop List Item Modal -->
+	<div id="shop-list-item-modal" class="shop-list-item-modal" >
+      <div class="shop-list-item-modal-content">
+        <legend><span class="shop-list-item-form-label">Product Items</span> <span class="shop-list-item-close" id="shop-list-item-clsBtn">&times;</span></legend>
+        <div class="shop-list-item-container">
+            <ul class="shop-list-products" id="shop-list-products"></ul>
+			<h3 class="shop-list-products-note"> -- 0 Item -- </h3>
+			<div class="shop-list-item-container-add">
+            
+			<form action="#">
+				<div class="row">
+				    <div class="col-25">
+					<label for="shop-list-item-container-add-iname" class="">Name</label>
+					  
+				    </div>
+					<div class="col-75">
+					<input type="text" id="shop-list-item-container-add-iname" name="shop-list-item-container-add-iname" placeholder="Item Name" disabled>
+				  </div>
+				</div>
+				<div class="row">
+				  <div class="col-25">
+					<label for="shop-list-item-container-add-quantity">Quantity</label>
+				  </div>
+				  <div class="col-75">
+					<input type="number" id="shop-list-item-container-add-quantity" name="shop-list-item-container-add-quantity" placeholder="Please Input Qunatity..." min="1" max="999999">
+				  </div>
+				</div>
+
+				<div class="row">
+				    <input id="add-item-saveItem" class="favItemSave" type="button" name="button" value="Save" onclick="favItemSave()">
+					<input id="add-item-saveItem-Cancel" type="button"  value="Cancel">
+					
+
+					</div>
+			  	</form>
+				</div>
+        	</div>
+		
+      </div>
+		
+    </div>
+	
+	  <script src="js/script.js"></script>
+  </body>
+</html>
